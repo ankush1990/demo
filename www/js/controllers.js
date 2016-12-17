@@ -41,22 +41,47 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('SearchCtrl', function ($scope) {
+.controller('SearchCtrl', function ($scope, $cordovaCamera) {
   // open PhotoLibrary
     $scope.takePhoto = function () {
-		  navigator.camera.getPicture(onSuccess, onFailure, {
-		  	destinationType: navigator.camera.DestinationType.FILE_URI,
-		  	sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
-         });
-	};
-	
-	function onSuccess(imageURI) {
-                  alert("Image location is:"+ imageURI);
-    }
-	
-	function onFailure(message) {
-				  alert("Get image failed: " + message);
-   }
+		var options = {
+			quality: 75,
+			destinationType: Camera.DestinationType.DATA_URL,
+			sourceType: Camera.PictureSourceType.CAMERA,
+			allowEdit: true,
+			encodingType: Camera.EncodingType.JPEG,
+			targetWidth: 300,
+			targetHeight: 300,
+			popoverOptions: CameraPopoverOptions,
+			saveToPhotoAlbum: false
+		};
+		
+		$cordovaCamera.getPicture(options).then(function (imageData) {
+			$scope.imgURI = "data:image/jpeg;base64," + imageData;
+		}, function (err) {
+			// An error occured. Show a message to the user
+		});
+		}
+		
+		$scope.choosePhoto = function () {
+		var options = {
+			quality: 75,
+			destinationType: Camera.DestinationType.DATA_URL,
+			sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+			allowEdit: true,
+			encodingType: Camera.EncodingType.JPEG,
+			targetWidth: 300,
+			targetHeight: 300,
+			popoverOptions: CameraPopoverOptions,
+			saveToPhotoAlbum: false
+		};
+		
+		$cordovaCamera.getPicture(options).then(function (imageData) {
+				$scope.imgURI = "data:image/jpeg;base64," + imageData;
+			}, function (err) {
+				// An error occured. Show a message to the user
+			});
+		}
 })
 
 .controller('PlaylistsCtrl', function($scope) {
