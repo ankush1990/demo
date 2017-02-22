@@ -61,9 +61,9 @@ angular.module('starter.controllers', [])
 		}, function (err) {
 			// An error occured. Show a message to the user
 		});
-		}
+	}
 		
-		$scope.choosePhoto = function () {
+	$scope.choosePhoto = function () {
 		var options = {
 			quality: 75,
 			destinationType: Camera.DestinationType.DATA_URL,
@@ -75,13 +75,13 @@ angular.module('starter.controllers', [])
 			popoverOptions: CameraPopoverOptions,
 			saveToPhotoAlbum: false
 		};
-		
+	
 		$cordovaCamera.getPicture(options).then(function (imageData) {
-				$scope.imgURI = "data:image/jpeg;base64," + imageData;
-			}, function (err) {
-				// An error occured. Show a message to the user
-			});
-		}
+			$scope.imgURI = "data:image/jpeg;base64," + imageData;
+		}, function (err) {
+			// An error occured. Show a message to the user
+		});
+	}
 })
 
 .controller('PlaylistsCtrl', function($scope) {
